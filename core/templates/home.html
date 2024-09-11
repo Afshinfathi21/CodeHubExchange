@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="ag-format-container">
+  <div class="ag-courses_box">
+      {% for department in departments %}
+    <div class="ag-courses_item">
+      <a class="ag-courses-item_link" href="{% url 'department-questions' department.name %}">
+        <div class="ag-courses-item_bg"></div>
+        
+        <div  class="ag-courses-item_title">
+          {{ department.name }}
+        </div>
+
+        <div class="ag-courses-item_count-box">
+          {{department.total_questions}} question
+        </div>
+        <div class="ag-courses-item_count-box">
+          {{department.questions_asked_today}} question asked Today
+        </div>
+      </a>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

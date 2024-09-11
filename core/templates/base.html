@@ -1,0 +1,154 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Also, remove the Bootstrap CSS link if it's already included -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3" />
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    {% block head %}{% endblock  %}
+    <title>CodeHubExchange</title>
+  </head>
+
+  <body>
+     
+    {% include 'offcanvas.html' %}
+
+    <div class="Main">
+      {% include "navbar.html" %}
+      {% include 'messaging.html' %}
+      {% block content %}
+      {% endblock %} 
+      {% include 'footer.html' %}
+    </div>
+  </body>
+
+  <script src="{% static 'js/prism.js' %}"></script>
+  <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'js/sidebars.js' %}"></script>
+
+ {% block script %}{% endblock  %}
+
+  <script>
+    $('#menu-btn svg').on("click", function () {
+        $('#navbar').toggleClass('close')
+    })
+
+    var typingTimer;
+    var doneTypingInterval = 500; 
+    
+    $('.SearchBox .input-Box input').on("keyup", function () {
+        clearTimeout(typingTimer); 
+    
+        if (this.value == "") {
+            $('.SearchBox .Search-result').fadeOut();
+            $('.SearchBox .input-Box').css({
+                "background-color": "#f6f7f7"
+            });
+            $('.SearchBox').css({
+                "outline": "none"
+            });
+            return;
+        }
+    
+
+        typingTimer = setTimeout(function () {
+
+            $.ajax({
+                type: "GET",
+                url: "{% url 'search' %}",
+                data: {
+                    'search_key': $('.SearchBox .input-Box input').val(),
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                    action: 'get'
+                },
+                traditional: true,
+                success: function (data) {
+                    displaySearchResults(data);
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    console.error("Error fetching search results:", errorThrown);
+                }
+            });
+        }, doneTypingInterval);
+    });
+
+    function displaySearchResults(results) {
+        let output = "";
+        for (var i = 0; i < results.length; i++) {
+            output += '<li>';
+
+            if (results[i].type === 'question') {
+                output += '<a href="{% url 'question-detail' 0 %}"><svg style="margin-right:5px;color: #009688" xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 1024 1024"><path fill="currentColor" d="M512 64a448 448 0 1 1 0 896a448 448 0 0 1 0-896m23.744 191.488c-52.096 0-92.928 14.784-123.2 44.352c-30.976 29.568-45.76 70.4-45.76 122.496h80.256c0-29.568 5.632-52.8 17.6-68.992c13.376-19.712 35.2-28.864 66.176-28.864c23.936 0 42.944 6.336 56.32 19.712c12.672 13.376 19.712 31.68 19.712 54.912c0 17.6-6.336 34.496-19.008 49.984l-8.448 9.856c-45.76 40.832-73.216 70.4-82.368 89.408c-9.856 19.008-14.08 42.24-14.08 68.992v9.856h80.96v-9.856c0-16.896 3.52-31.68 10.56-45.76c6.336-12.672 15.488-24.64 28.16-35.2c33.792-29.568 54.208-48.576 60.544-55.616c16.896-22.528 26.048-51.392 26.048-86.592c0-42.944-14.08-76.736-42.24-101.376c-28.16-25.344-65.472-37.312-111.232-37.312m-12.672 406.208a54.272 54.272 0 0 0-38.72 14.784a49.408 49.408 0 0 0-15.488 38.016c0 15.488 4.928 28.16 15.488 38.016A54.848 54.848 0 0 0 523.072 768c15.488 0 28.16-4.928 38.72-14.784a51.52 51.52 0 0 0 16.192-38.72a51.968 51.968 0 0 0-15.488-38.016a55.936 55.936 0 0 0-39.424-14.784"/></svg>'.replace(0, results[i].slug) + results[i].text + '</a>';
+            } else if (results[i].type === 'user') {
+                output += '<a href="{% url 'profile' 0 %}"><svg style="margin-right:5px" xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24"><path fill="currentColor" d="M12 4a4 4 0 0 1 4 4a4 4 0 0 1-4 4a4 4 0 0 1-4-4a4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4"/></svg>'.replace(0, results[i].text) + results[i].text + '</a>';
+            } else if (results[i].type === 'tag') {
+                output += '<a  href="{% url 'tag-questions' 0 %}"><svg style="margin-right:5px ;color:#FF8C00" xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24"><path fill="currentColor" d="M5.5 9A1.5 1.5 0 0 0 7 7.5A1.5 1.5 0 0 0 5.5 6A1.5 1.5 0 0 0 4 7.5A1.5 1.5 0 0 0 5.5 9m11.91 2.58c.36.36.59.86.59 1.42c0 .55-.22 1.05-.59 1.41l-5 5a1.996 1.996 0 0 1-2.83 0l-6.99-6.99C2.22 12.05 2 11.55 2 11V6c0-1.11.89-2 2-2h5c.55 0 1.05.22 1.41.58zm-3.87-5.87l1-1l6.87 6.87c.37.36.59.87.59 1.42c0 .55-.22 1.05-.58 1.41l-5.38 5.38l-1-1L20.75 13z"/></svg>'.replace(0, results[i].text) + results[i].text + '</a>';
+            }
+
+            output += '</li>';
+        }
+
+        if (results.length == 0) {
+            output = `<li style="text-align: center;">Not Found !</li>`
+        }
+
+        $('.SearchBox .Search-result').html(output);
+
+        $('.SearchBox .Search-result').fadeIn()
+        $('.SearchBox .input-Box').css({
+            "background-color": "white",
+        })
+        $('.SearchBox').css({
+            "outline": "2px solid var(--border-color)",
+            "border-top-right-radius": "10px",
+            "border-top-left-radius": "10px"
+        })
+    }
+
+    $(".header .box-profile").on("click", function () {
+        $('.profile-card').toggleClass("active")
+
+    })
+
+    $(".sign-out-btn").on("click", function () {
+
+        $.ajax({
+            type: "POST",
+            url: "{% url 'logout' %}",
+            data: {
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                action: 'post'
+            },
+            traditional: true,
+            success: function (data) {
+                window.location.href = "/"
+            },
+            error: function (xhr, textStatus, errorThrown) { }
+        })
+    })
+</script>
+<script>
+    setTimeout(function() {
+        document.getElementById('success-message').style.display = 'none';
+    }, 3000);
+    setTimeout(function() {
+        document.getElementById('error-message').style.display = 'none';
+    }, 3000);
+    setTimeout(function() {
+        document.getElementById('warning-message').style.display = 'none';
+    }, 3000);
+    setTimeout(function() {
+        document.getElementById('info-message').style.display = 'none';
+    }, 3000);
+</script>
+</html>

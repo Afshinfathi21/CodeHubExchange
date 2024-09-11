@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+ 
+<div class="tags-list" style="margin-top: 30px;">
+  {% for tag in tags_page %}
+      <div class="tag-card">
+          <div class="tag-header">
+              <h5><a href="{% url 'tag-questions' tag.tagname %}">{{ tag.tagname }}</a></h5>
+          </div>
+          <div class="tag-content">
+              <p style="text-align: right; font-size: x-small; margin: 0 8px 5px 0;" class="text-muted">{{tag.question_count}} question</p>
+              <p style="text-align: right; font-size: x-small; margin: 0 0 5px 0;" class="text-muted">{{tag.todays_question_count}} question asked Today</p>
+          </div>
+      </div>
+  {% endfor %}
+</div>
+
+<ul class="pagination justify-content-center mt-4" style="position: sticky;">
+    {% if tags_page.has_previous %}
+    <li class="page-item">
+        <a class="page-link" style="color:#4DA3FF" href="?page={{ tags_page.previous_page_number }}">Prev</a>
+    </li>
+    {% endif %}
+
+    {% for i in tags_page.paginator.page_range %}
+    <li class="page-item {% if i == tags_page.number %}active{% endif %}">
+        <a class="page-link" style="color:#4DA3FF" href="?page={{ i }}">{{ i }}</a>
+    </li>
+    {% endfor %}
+
+    {% if tags_page.has_next %}
+    <li class="page-item">
+        <a class="page-link" style="color:#4DA3FF" href="?page={{ tags_page.next_page_number }}">Next</a>
+    </li>
+    {% endif %}
+</ul> 
+{% endblock %}

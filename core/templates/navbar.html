@@ -1,0 +1,72 @@
+<div class="header">
+  {% if user.is_authenticated %}
+    {% if user.is_superuser or user.is_staff %}
+      
+      <div class="Profile">
+        <div class="box-profile">
+          <img src="{{ user.profile_img.url }}" alt="{{ user.username }}" width="30px" height="30px" loading="lazy"/>
+        </div>
+        <div class="profile-card">
+          <div id="wave"></div>
+          <div class="image">
+            <img src="{{ user.profile_img.url }}" alt="" loading="lazy"/>
+          </div>
+          <div class="data">
+            <h2>{{ user.username }}</h2>
+          </div>
+          <div class="buttons">
+            <a href="/admin/" class="btn">پنل</a>
+            <a class="btn sign-out-btn">خروج</a>
+          </div>
+        </div>
+      </div>
+    {% else %}
+
+      <div class="Profile">
+        <div class="box-profile">
+          <img src="{{ user.profile_img.url }}" alt="{{ user.username }}" width="30px" height="30px" loading="lazy"/>
+        </div>
+        <div class="profile-card">
+          <div class="image">
+            <img src="{{ user.profile_img.url }}" alt="" loading="lazy"/>
+          </div>
+          <div class="data">
+            <h2>{{ user.username }}</h2>
+          </div>
+          <div class="buttons">
+            <a href="{% url 'dashboard'%}" class="btn">داشبورد</a>
+            <a class="btn sign-out-btn">خروج</a>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  {% else %}
+    <a class="log-btn" href="{% url 'login' %}">
+      ورود
+      <svg xmlns="http://www.w3.org/2000/svg" width="25px" height="25px" viewBox="0 0 24 24">
+        <path fill="currentColor" d="M12 21v-2h7V5h-7V3h7q.825 0 1.413.588T21 5v14q0 .825-.587 1.413T19 21zm-2-4l-1.375-1.45l2.55-2.55H3v-2h8.175l-2.55-2.55L10 7l5 5z" />
+      </svg>
+    </a>
+  {% endif %}
+  <div class="Search">
+    <div class="SearchBox" style="background-color: white;">
+      <div class="input-Box">
+        <input type="text" placeholder="Search" />
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16">
+          <path fill="currentColor" d="M10.68 11.74a6 6 0 0 1-7.922-8.982a6 6 0 0 1 8.982 7.922l3.04 3.04a.749.749 0 0 1-.326 1.275a.749.749 0 0 1-.734-.215ZM11.5 7a4.499 4.499 0 1 0-8.997 0A4.499 4.499 0 0 0 11.5 7Z" />
+        </svg>
+      </div>
+      <div class="Search-result" style="display: none;">
+        <li style="text-align: center;">پیدا نشد !</li>
+      </div>
+    </div>
+  </div>
+  <div class="logo-menu">
+    <div id="menu-btn">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" d="M20 7H4m16 5H4m16 5H4" />
+      </svg>
+    </div>
+    <a class="logo" href="/">CodeHubExchange</a>
+  </div>
+</div>

@@ -1,0 +1,5 @@
+USERNAME: afshin	PASSWORD: 12345678
+
+USERNAME: farid		PASSWORD: 12345678
+
+USERNAME: admin		PASSWORD: admin  //superuser

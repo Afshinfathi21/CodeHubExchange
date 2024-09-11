@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <link rel="website icon" type="png" href="https://img.icons8.com/tiny-glyph/16/add-user-male.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            outline: none;
+            border: none;
+            transition: all .2s ease-out;
+        }
+        
+        input,
+        textarea {
+            transition: none;
+        }
+        
+        a {
+            text-decoration: none !important;
+        }
+        
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        
+         ::-webkit-scrollbar {
+            width: 6px !important;
+        }
+        
+         ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+         ::-webkit-scrollbar-thumb {
+            background: #4DA3FF;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        body {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+        }
+        
+        .sign-up {
+            width: 400px;
+            padding: 20px 0 20px 0;
+            border: 1px solid #e6e6e6;
+            border-radius: 7px;
+            text-align: center;
+        }
+        
+        .sign-up input {
+            margin-bottom: 14px;
+            padding: 10px;
+            width: 90%;
+            border-radius: 5px;
+            border: 1px #e6e6e6 solid;
+            font-size: 14px !important;
+        }
+        
+        .sign-up textarea {
+            border: 1px #e6e6e6 solid;
+            padding: 10px;
+            border-radius: 5px;
+            resize: none;
+            width: 90%;
+            height: 20vh;
+            margin-bottom: 5px;
+            font-size: 14px !important;
+        }
+        
+        .sign-up .upload-box {
+            width: fit-content;
+            margin-left: 5%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .sign-up .upload-box svg {
+            cursor: pointer;
+            transition: none;
+            color: #707070;
+            margin: 0;
+        }
+        
+        .sign-up .upload-box svg:hover {
+            color: #009688;
+        }
+
+        
+        .sign-up .upload-profile-photo {
+            margin: 5px 0;
+            margin-left: 5%;
+            text-align: center;
+            margin-top: 10px;
+            display: none;
+        }
+        
+        .sign-up .upload-profile-photo img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+        }
+        
+        .sign-up input:focus,
+        .sign-up textarea:focus {
+            border: 2px #009688 solid;
+            padding: 9px;
+        }
+        
+        .sign-up button {
+            padding: 9px;
+            background-color: #009688;
+            border-radius: 6px;
+            color: white;
+            width: 90%;
+            margin-top: 8px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .sign-up button:hover {
+            filter: brightness(90%);
+        }
+        
+        .header-p {
+            color: #009688;
+            margin-bottom: 20px !important;
+            text-align: center !important;
+            font-size: 25px !important;
+        }
+
+        
+        .redirect-btn {
+            display: inline-block;
+            padding: 2px;
+            cursor: pointer;
+            font-size: small;
+        }
+        
+
+        form .back {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: unset;
+            padding: 0 5%;
+        }
+        
+        form .back svg {
+            color: #707070;
+        }
+        
+        form .back a svg:hover {
+            color: #009688;
+            cursor: pointer;
+        }
+        
+        input[name="github"],
+        input[name="linkedin"] {
+            margin-left: 5%;
+            display: none;
+        }
+    
+        .show-errors {
+            width: 90%;
+            margin-left: 5%;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        .show-errors div {
+            margin: 0%;
+            margin-top: 15px;
+            padding: 0%;
+            border: none;
+        }
+        .show-errors div li{
+            padding: .3rem 1.25rem;
+        }
+
+        @media(max-width:412px) {
+
+            .sign-in {
+                width: 100%;
+            }
+        }
+        .error{color:red;font-size:.875em;margin-bottom;:5px}
+    </style>
+</head>
+
+<body>
+
+    <div class="sign-up">
+        <form id="register-form">
+            {% csrf_token %}
+                <div class="back">
+                    <a href="{% url 'login' %}"><svg xmlns="http://www.w3.org/2000/svg" width="33" height="33"
+                        viewBox="0 0 24 24">
+                        <path fill="currentColor"
+                            d="m6.8 13l2.9 2.9q.275.275.275.7t-.275.7q-.275.275-.7.275t-.7-.275l-4.6-4.6q-.15-.15-.213-.325T3.426 12q0-.2.063-.375T3.7 11.3l4.6-4.6q.275-.275.7-.275t.7.275q.275.275.275.7t-.275.7L6.8 11H20q.425 0 .713.288T21 12q0 .425-.288.713T20 13H6.8Z" />
+                    </svg></a>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24">
+                    <path fill="currentColor"
+                        d="M15 14c-2.67 0-8 1.33-8 4v2h16v-2c0-2.67-5.33-4-8-4m-9-4V7H4v3H1v2h3v3h2v-3h3v-2m6 2a4 4 0 0 0 4-4a4 4 0 0 0-4-4a4 4 0 0 0-4 4a4 4 0 0 0 4 4Z" />
+                </svg>
+            </div>
+            <p class="header-p">عضویت در سایت</p>
+            <div class="upload-profile-photo">
+                <img>
+            </div>
+            <div class="error" id="error-username"></div>
+            <input type="text" placeholder="نام کاربری" name="username">
+            <div class="error" id="error-email"></div>
+            <input type="text" placeholder="ایمیل" name="email">
+            <div class="error" id="error-password1"></div>
+            <input type="password" placeholder="رمز عبور" name="password1">
+            <div class="error" id="error-password2"></div>
+            <input type="password" placeholder="تکرار رمز عبور" name="password2">
+            <div class="error" id="error-bio"></div>
+            <textarea placeholder="درباره خودت" name="bio"></textarea>
+            <div class="upload-box">
+            <label class="btn btn-default btn-file" style="padding: 0;margin: 0;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 48 48">
+                    <g fill="currentColor">
+                        <path d="M32 20a8 8 0 1 1-16 0a8 8 0 0 1 16 0" />
+                        <path fill-rule="evenodd"
+                            d="M23.184 43.984C12.517 43.556 4 34.772 4 24C4 12.954 12.954 4 24 4s20 8.954 20 20s-8.954 20-20 20a21.253 21.253 0 0 1-.274 0c-.181 0-.362-.006-.542-.016M11.166 36.62a3.028 3.028 0 0 1 2.523-4.005c7.796-.863 12.874-.785 20.632.018a2.99 2.99 0 0 1 2.498 4.002A17.942 17.942 0 0 0 42 24c0-9.941-8.059-18-18-18S6 14.059 6 24c0 4.916 1.971 9.373 5.166 12.621"
+                            clip-rule="evenodd" />
+                    </g>
+                </svg>
+                <input type="file" accept="image/*" style="display: none;" id="upload" name="profile_img">
+            </label>
+                    <svg class="Add-link" xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24">
+                <path fill="currentColor"
+                    d="M17 20v-3h-3v-2h3v-3h2v3h3v2h-3v3zm-6-3H7q-2.075 0-3.537-1.463T2 12q0-2.075 1.463-3.537T7 7h4v2H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4zm-3-4v-2h8v2zm14-1h-2q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.463T22 12" />
+            </svg>
+                </div>
+                
+                <input type="text" placeholder="GitHub" name="github">
+                <input type="text" placeholder="LinkedIn" name="linkedin">
+                <button type="submit" class="sign-up-btn">عضویت در سایت</button>
+        </form>
+
+    </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $("#upload").on("change", function() {
+        if (this.files && this.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                $('.upload-profile-photo').css({
+                    "display": "block"
+                });
+                $('.upload-profile-photo img').attr('src', e.target.result)
+            };
+
+            reader.readAsDataURL(this.files[0]);
+        }
+    })
+
+    $('.upload-box .Add-link').on("click", function() {
+        $('input[name="github"]').toggle();
+        $('input[name="linkedin"]').toggle();
+    })
+    $(document).ready(function() {
+        $('#register-form').submit(function(e) {
+            e.preventDefault(); // Prevent the default form submission
+            var formData = new FormData($(this)[0]); // Get form data
+
+            $.ajax({
+                url: '{% url "register" %}', // URL to submit the form data
+                type: 'POST',
+                data: formData,
+                processData: false, // Prevent jQuery from processing data
+                contentType: false, // Prevent jQuery from setting contentType
+                success: function(response) {
+                    // Handle successful response
+                    console.log('registration successfull.')
+                    window.location.href=response.next_url
+                },
+                error: function(xhr) {
+                    if (xhr.status === 400) {
+                        var errors = xhr.responseJSON.error;
+                        for (var key in errors) {
+                            $('#error-' + key).text(errors[key]);
+                        }
+                    } else {
+                        alert('An unexpected error occurred.');
+                    }
+                }
+            });
+        });
+    });
+</script>
+
+</html>

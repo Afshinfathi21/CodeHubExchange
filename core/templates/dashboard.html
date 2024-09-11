@@ -1,0 +1,314 @@
+{% extends "dashboard-base.html" %}
+
+
+
+{% block dashboard-content %}
+
+<div class="dashboard-main">
+    <div class="Dashboard-badges" style="direction: rtl;">
+        <div class="Dashboard-badges-div">
+            <div>
+                <span>تعداد کل سوالات</span>
+                <h1>{{ user.question_set.count }}</h1>
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-question" viewBox="0 0 16 16">
+                <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286m1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94"/>
+              </svg>
+        </div>
+        <div class="Dashboard-badges-div">
+            <div>
+                <span>تعداد سوالات در انتظار تایید</span>
+                <h1>{{ waiting_questions }}</h1>
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24">
+                <g fill="none">
+                    <path
+                        d="M24 0v24H0V0zM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427c-.002-.01-.009-.017-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093c.012.004.023 0 .029-.008l.004-.014l-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014l-.034.614c0 .012.007.02.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z" />
+                    <path fill="currentColor"
+                        d="M12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12S6.477 2 12 2m0 2a8 8 0 1 0 0 16a8 8 0 0 0 0-16m0 12a1 1 0 1 1 0 2a1 1 0 0 1 0-2m0-9.5a3.625 3.625 0 0 1 1.348 6.99a.837.837 0 0 0-.305.201c-.044.05-.051.114-.05.18L13 14a1 1 0 0 1-1.993.117L11 14v-.25c0-1.153.93-1.845 1.604-2.116a1.626 1.626 0 1 0-2.229-1.509a1 1 0 1 1-2 0A3.625 3.625 0 0 1 12 6.5" />
+                </g>
+            </svg>
+        </div>
+        <div class="Dashboard-badges-div">
+            <div>
+                <span>تعداد کل جواب ها</span>
+                <h1>{{ user.comment_set.count }}</h1>
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 24 24">
+                <path fill="currentColor"
+                    d="M5.455 15L1 18.5V3a1 1 0 0 1 1-1h15a1 1 0 0 1 1 1v12zm-.692-2H16V4H3v10.385zM8 17h10.237L20 18.385V8h1a1 1 0 0 1 1 1v13.5L17.546 19H9a1 1 0 0 1-1-1z" />
+            </svg>
+        </div>
+        <div class="Dashboard-badges-div">
+            <div>
+                <span>تعداد جواب های پذیرفته شده</span>
+                <h1>{{ accepted_answers }}</h1>
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 2048 2048">
+                <path fill="currentColor" d="m1902 196l121 120L683 1657L25 999l121-121l537 537z" />
+            </svg>
+        </div>
+
+        <div class="Dashboard-badges-div">
+            <div>
+                <span>تعداد موضوعات</span>
+                <h1>{{ total_topics }}</h1>
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-bookmark" viewBox="0 0 16 16">
+                <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z"/>
+              </svg>
+        </div>
+        <div class="Dashboard-badges-div">
+            <div>
+                <span>تعداد موضوعات تایید شده</span>
+                <h1>{{ accepted_topics }}</h1>
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-bookmark-check" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M10.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0"/>
+                <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z"/>
+              </svg>
+        </div>
+    </div>
+
+    <div class="dashboard-user-information">
+        
+            <div id="question-section" class="dashboard-question" style="width: 90%;direction: rtl;">
+                <h4>سوال ها </h4>
+                <div class="filtering-section " style="margin-bottom: 20px;direction: rtl;">
+                    <div class="filter-container" style="direction: rtl;">
+                        <div class="filter-buttons btn-group" role="group" aria-label="Filter by">
+                    
+                            <a type="button" class="btn btn-light" href="?questions=all">همه</a>
+                            <a type="button" class="btn btn-light" href="?questions=unaswered">بدون پاسخ</a>
+                            <a type="button" class="btn btn-light" href="?questions=newest">جدیدترین</a>
+                            <a type="button" class="btn btn-light" href="?questions=week">هفته</a>
+                            <a type="button" class="btn btn-light" href="?questions=month">ماه</a>
+                        </div>
+                        <p style="text-align: right; margin: 0 20px;direction: rtl;" class="text-muted">{{ questions.count }} سوال</p>
+                    </div>
+                    <div class="search-box" style="display: flex;margin-top: 25px;align-items: center;">
+                        <input type="text" class="form-control" style="width: 400px;" placeholder="جست و جو">
+                    </div>
+                </div>
+                
+                <div class="dashboard-question-content">
+                    {% if questions %}
+
+                    <ol class="gradient-list" >
+                        {% for question in questions %}
+                        <li><a style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#modal-question{{ forloop.counter }}">
+                            {{ question.title }}
+                        </a></li>
+                        <div class="modal fade" style="direction: ltr;" id="modal-question{{ forloop.counter }}" tabindex="-1"
+                        aria-labelledby="modalLabel{{ forloop.counter }}" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-xl">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modalLabel{{ forloop.counter }}">
+                                        <a href="{% url 'question-detail' slug=question.slug %}">{{ question.title }}</a>
+                                        <em class="text-muted" style="font-size: smaller;"> Views: {{question.views}}</em>
+                                    </h5>
+                                    <a onclick="delete_question({{question.id}})" style='margin-left:10px ;'>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                            class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                                            <path
+                                                d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5" />
+                                        </svg>
+                                        <i class="bi bi-trash3-fill"></i>
+                                    </a>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="table-responsive" style="max-height: 800px; overflow-y: auto;">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>جواب</th>
+                                                    <th>وضعیت</th>
+                                                    <th>توسط</th>
+                                                    <th>تاریخ</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% if question.comment_set.all %}
+                                                {% for answer in question.comment_set.all %}
+                                                <tr>
+                                                    <td>{{ answer.comment|safe }}</td>
+                                                    <td>
+                                                        <input type="checkbox" class="accept-checkbox"
+                                                            data-answer-id="{{ answer.id }}" onchange="handleAcceptChange(this)"
+                                                            {%if answer.is_answer %}checked{% endif %}>
+                                                    </td>
+                                                    <td>{{ answer.user }}</td>
+                                                    <td>{{ answer.created_at }}</td>
+                                                </tr>
+                                                {% endfor %}
+                                                {% else %}
+                                                <tr>
+                                                    <td colspan="4">
+                                                        {% if not question.approve %}
+                                                        سوال توسط ادمین تایید نشده است
+                                                        {% else %}
+                                                        بدون جواب
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                                {% endif %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="modal-footer" style="display: none;">
+                                    <form method="POST" id="post-form">
+                                        {% csrf_token %}
+                                        <button type="button" class="btn btn-secondary"
+                                            onclick="cancelAcceptChanges()">لغو</button>
+                                        <button type="submit" class="btn btn-primary" onclick="saveAcceptChanges()">ثبت</button>
+                                    </form>
+                                </div>
+        
+                            </div>
+                        </div>
+                    </div>
+                        {% endfor %}
+                    </ol>
+                    {% else %}
+                    <p style="text-align: right; font-size: x-small;" class="text-muted">سوالی ثبت نشده.</p>
+
+
+                    {% endif %}
+                </div>
+
+            </div>
+            <div id='answer-section' class="dashboard-answer" style="width: 90%;direction: rtl;">
+
+                <h4>پاسخ ها </h4>
+                <div class="filtering-section " style="margin-bottom: 20px;direction: rtl;">
+                    <div class="filter-container" style="direction: rtl;">
+                        <div class="filter-buttons btn-group" role="group" aria-label="Filter by">
+                    
+                            <a type="button" class="btn btn-light" href="?answers=all">همه</a>
+                            <a type="button" class="btn btn-light" href="?answers=newest">جدیدترین</a>
+                            <a type="button" class="btn btn-light" href="?answers=week">هفته</a>
+                            <a type="button" class="btn btn-light" href="?answers=month">ماه</a>
+                        </div>
+                        <p style="text-align: right; margin: 0 20px;direction: rtl;" class="text-muted">{{ answers.count }} پاسخ</p>
+                    </div>
+                    <div class="search-box" style="display: flex;margin-top: 25px;align-items: center;">
+                        <input type="text" class="form-control" style="width: 400px;" placeholder="جست و جو">
+                    </div>
+                </div>
+                {% if answers %}
+                <ol class="gradient-list">
+                    {% for answer in answers %}
+                    <li><a style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#modal-answer{{ forloop.counter }}">
+                        {{ answer.title }}
+                        </a></li>
+                    <div class="modal fade" style="direction: ltr;" id="modal-answer{{ forloop.counter }}" tabindex="-1"
+                    aria-labelledby="modalLabel{{ forloop.counter }}" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-xl">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalLabel{{ forloop.counter }}"><a
+                                        href="{% url 'question-detail' slug=answer.slug %}">{{ answer.title }}</a></h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+            
+                                <div class="table-responsive" style="max-height: 800px; overflow-y: auto;">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>جواب</th>
+                                                <th>وضعیت</th>
+                                                <th>تاریخ</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for anser in answer.comment_set.all %}
+                                            {% if anser.user == request.user %}
+                                            <tr >
+                                                <td>{{ anser.comment|safe }}</td>
+                                                <td>
+                                                    {% if anser.is_answer %}
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
+                                                        <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0"/>
+                                                      </svg>
+                                                    {% else %}
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                                                        <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+                                                      </svg>
+                                                    {% endif %}
+                                                </td>
+                                                <td>{{ anser.created_at }}</td>
+                                            </tr>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    {% endfor %}
+                </ol>
+                {% else %}
+                <p style="text-align: right; font-size: x-small;" class="text-muted">پاسخی ثبت نشده.</p>
+
+
+                {% endif %}
+            </div>
+        
+    </div>
+</div>
+<script>
+    
+    function handleAcceptChange(checkbox) {
+        $(".modal-footer").show();
+    }
+
+    function cancelAcceptChanges() {
+        $(".modal-footer").hide();
+        location.reload();
+    }
+    function saveAcceptChanges() {
+        var checkedAnswers = [];
+        $(".accept-checkbox:checked").each(function () {
+            checkedAnswers.push($(this).data("answer-id"));
+        });
+        var uncheckedAnswers = [];
+        $(".accept-checkbox:not(:checked)").each(function () {
+            uncheckedAnswers.push($(this).data("answer-id"));
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "{% url 'update-answers' %}",
+            data: {
+                'answers[]': checkedAnswers,
+                'unchecked_answers[]': uncheckedAnswers,
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                action: 'post'
+            },
+            success: function (data) {
+
+                console.log("Changes saved successfully");
+            },
+            error: function (error) {
+
+                console.error("Error saving changes: ", error);
+            }
+        });
+
+        $(".modal-footer").hide();
+    }
+    function showConfirmation() {
+        var myModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
+        myModal.show();
+    }
+
+    
+</script>
+
+{% endblock %}

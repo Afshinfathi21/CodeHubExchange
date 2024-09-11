@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+  <link rel="website icon" type="png" href="https://img.icons8.com/material-outlined/24/dashboard-layout.png">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+</head>
+
+<body>
+  
+  <nav class="close">
+    
+    <div class="menu-items">
+      <ul class="nav-links">
+        <li><a href="/">
+            <i class="uil uil-estate"></i>
+            <span class="link-name">خانه</span>
+          </a></li>
+          <li><a onclick="scrollToSection('question-section')">
+            <i>
+              <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24">
+                <g fill="none">
+                  <path
+                    d="M24 0v24H0V0zM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427c-.002-.01-.009-.017-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093c.012.004.023 0 .029-.008l.004-.014l-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014l-.034.614c0 .012.007.02.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z" />
+                  <path fill="currentColor"
+                    d="M12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12S6.477 2 12 2m0 2a8 8 0 1 0 0 16a8 8 0 0 0 0-16m0 12a1 1 0 1 1 0 2a1 1 0 0 1 0-2m0-9.5a3.625 3.625 0 0 1 1.348 6.99a.837.837 0 0 0-.305.201c-.044.05-.051.114-.05.18L13 14a1 1 0 0 1-1.993.117L11 14v-.25c0-1.153.93-1.845 1.604-2.116a1.626 1.626 0 1 0-2.229-1.509a1 1 0 1 1-2 0A3.625 3.625 0 0 1 12 6.5" />
+                </g>
+              </svg>
+            </i>
+            <span class="link-name">سوال ها
+            </span>
+
+          </a>
+        </li>
+        <li><a onclick="scrollToSection('answer-section')">
+            <i>
+              <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24">
+                <path fill="currentColor"
+                  d="M5.455 15L1 18.5V3a1 1 0 0 1 1-1h15a1 1 0 0 1 1 1v12zm-.692-2H16V4H3v10.385zM8 17h10.237L20 18.385V8h1a1 1 0 0 1 1 1v13.5L17.546 19H9a1 1 0 0 1-1-1z" />
+              </svg>
+            </i>
+            <span class="link-name">جواب ها</span>
+          </a>
+        </li>
+        <li><a onclick="showeditModal()">
+            <i>
+              <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+              </svg>
+            </i>
+            <span class="link-name">ویرایش پروفایل
+            </span>
+
+          </a>
+        </li>
+        <li><a onclick="showConfirmation()">
+            <i>
+              <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
+              </svg>
+            </i>
+            <span class="link-name">حذف پروفایل</span>
+          </a>
+        </li>
+        {% comment %} <li><a>
+            <i>
+              <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-bookmark" viewBox="0 0 16 16">
+                <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z"/>
+              </svg>
+            </i>
+            <span class="link-name">نشانه ها</span>
+          </a>
+        </li> {% endcomment %}
+        <li><a onclick="showtopicModal()">
+            <i>
+              <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-file-earmark-plus" viewBox="0 0 16 16">
+                <path d="M8 6.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 .5-.5"/>
+                <path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5z"/>
+              </svg>
+            </i>
+            <span class="link-name">درخواست موضوع</span>
+          </a>
+        </li>
+      </ul>
+
+
+      <ul class="logout-mode">
+
+
+        <li><a class="sign-out-btn">
+            <i class="uil uil-signout"></i>
+            <span class="link-name">خروج</span>
+          </a></li>
+
+      </ul>
+    </div>
+  </nav>
+  
+  <section class="dashboard">
+    
+    <div class="header">
+      <i class="uil uil-bars sidebar-toggle"></i>
+      
+    </div>
+    
+    <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">تاییدیه</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" style="border: none;direction: rtl;">
+            ایا ازین کار مطمعن هستید؟ اکانت شما برنمیگردد!
+          </div>
+          <div class="modal-footer" style="direction: rtl;">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">لغو</button>
+            <button type="submit" onclick="delete_profile('{{ user.username }}')" class="btn btn-primary">تایید</button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="topicModal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">درخواست موضوع</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" style="border: none;direction: rtl;">
+              <label for="name" class="form-label">موضوع</label>
+              <input type="text" class="form-control" id="name" name="tagname">
+              <select class="form-select mt-3" aria-label="Select Topic" id="topicSelect">
+                <!-- Options will be populated dynamically -->
+              </select>
+          </div>
+          <div class="modal-footer" style="direction: rtl;">
+            <button type="button" onclick="submitRequest()" class="btn btn-primary" id="submitBtn">درخواست</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+
+    <div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="editProfileModalLabel">Edit Profile</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                  <!-- Your Form -->
+                  <div class="edit-profile">
+                      <form id="edit-profile-form" method="post" enctype="multipart/form-data">
+                          <p class="header-p">Edit Profile</p>
+                          <div class="upload-profile-photo">
+                              <img src="{{user.profile_img.url}}" loading="lazy">
+                              <div class="error" id="error-profile_img"></div>
+                          </div>
+                          {% csrf_token %}
+                          <input type="text" name="username" placeholder="نام کاربری" maxlength="150" id="id_username" value="{{user.username}}">
+                          <div class="error" id="error-username"></div>
+  
+                          <input type="text" name="email" placeholder="ایمیل" maxlength="150" id="id_email" value="{{user.email}}">
+                          <div class="error" id="error-email"></div>
+  
+                          <textarea name="bio" cols="40" rows="10" id="id_bio" placeholder="درباره خودت">{{user.bio}}</textarea>
+                          <div class="error" id="error-bio"></div>
+  
+                          <input type="text" name="github_link" maxlength="250" id="id_github_link" placeholder="Github Link" value="{% if user.github_link %}{{user.github_link}}{% endif %}" style="margin-top: 14px;">
+                          <div class="error" id="error-github_link"></div>
+  
+                          <input type="text" name="linkdin_link" maxlength="250" id="id_linkdin_link" placeholder="Linkdin Link" value="{% if user.linkdin_link %}{{user.linkdin_link}}{% endif %}">
+                          <div class="error" id="error-linkdin_link"></div>
+  
+                          <button type="submit" id="submit">ذخیره</button>
+                          <!-- Hidden file input -->
+                          <input type="file" accept="image/*" style="display: none;" id="upload" name="profile_img" value="">
+                      </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+    <div class="dashboard-content">
+      <div id="messages-container"></div>
+      <div class="message">
+        {% include "messaging.html" %}
+      </div>
+      {% block dashboard-content %}{% endblock %}
+    </div>
+    
+  </section>
+
+
+</body>
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+  const body = document.querySelector("body"),
+    sidebar = body.querySelector("nav");
+  sidebarToggle = body.querySelector(".sidebar-toggle");
+  sidebarToggle.addEventListener("click", () => {
+    sidebar.classList.toggle("close");
+  })
+
+  function showConfirmation() {
+    var myModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
+    myModal.show();
+  }
+  function showtopicModal() {
+    var myModal = new bootstrap.Modal(document.getElementById('topicModal'));
+    myModal.show();
+  }
+  function showeditModal() {
+    var myModal = new bootstrap.Modal(document.getElementById('editProfileModal'));
+    myModal.show();
+  }
+  function delete_profile(username){
+    $.ajax({
+        type: 'DELETE',
+        url: "{% url 'delete-profile' 0 %}".replace('0', username),
+        success: function(response) {
+            console.log("Profile deleted successfully");
+            window.location.href='/'; 
+        },
+        error: function(xhr, status, error) {
+            console.error("Error deleting profile:", error);
+        }
+    });
+}
+
+
+  $(".box-profile").on("click", function () {
+    $('.profile-card').toggleClass("active");
+  })
+  $(".sign-out-btn").on("click", function () {
+
+    $.ajax({
+        type: "POST",
+        url: "{% url 'logout' %}",
+        data: {
+            csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+            action: 'post'
+        },
+        traditional: true,
+        success: function (data) {
+            window.location.href = "/"
+        },
+        error: function (xhr, textStatus, errorThrown) { }
+    })
+})
+function scrollToSection(sectionId) {
+  var section = document.getElementById(sectionId);
+  if (section) {
+
+    var offsetTop = section.offsetTop;
+
+    window.scrollTo({
+      top: offsetTop,
+      behavior: 'smooth'
+    });
+  }
+}
+function delete_question(questionId) {
+  $.ajax({
+      type: "DELETE",
+      url: "{% url 'delete-question' 0 %}".replace('0', questionId),
+      success: function(response) {
+
+          console.log("Question deleted successfully");
+          location.reload()
+      },
+      error: function(xhr, status, error) {
+
+          console.error("Error deleting question:", error);
+      }
+  });
+}
+function fetchDepartments() {
+  $.ajax({
+      url: '{% url "deps-name" %}',
+      type: 'GET',
+      success: function(data) {
+          
+          $('#topicSelect').empty();
+          
+          data.forEach(function(department) {
+              $('#topicSelect').append($('<option>', {
+                  value: department,
+                  text: department
+              }));
+          });
+     
+          $('#submitBtn').prop('disabled', false);
+      },
+      error: function(xhr, status, error) {
+          console.error(error);
+          // Handle error
+      }
+  });
+}
+
+function submitRequest() {
+  var formData = {
+      tagname: $('#name').val(),
+      selectedDepartment: $('#topicSelect').val(),
+      user:'{{user.username}}',
+  };
+
+  $.ajax({
+      url: '{% url "req-topic" %}', 
+      type: 'POST',
+      data: formData,
+      success: function(response) {
+          // Handle success
+          console.log('Form submitted successfully');
+          location.reload()
+      },
+      error: function(xhr, status, error) {
+          console.error(error);
+          location.reload()
+      }
+  });
+}
+
+$('#topicModal').on('show.bs.modal', function () {
+  fetchDepartments();
+});
+
+$('#edit-profile-form').on('submit', function(e) {
+  e.preventDefault();
+
+  // Clear previous errors
+  $('.error').text('');
+
+  // Prepare form data
+  var formData = new FormData(this);
+
+  $.ajax({
+      url: '{% url "edit-profile" %}',
+      type: 'POST',
+      data: formData,
+      processData: false,
+      contentType: false,
+      success: function(response) {
+          // Handle success (redirect or show a success message)
+          window.location.reload()
+      },
+      error: function(xhr) {
+          // Handle errors
+          if (xhr.status === 400) {
+              var errors = xhr.responseJSON.error;
+              for (var key in errors) {
+                  $('#error-' + key).text(errors[key]);
+              }
+          } else {
+              alert('An unexpected error occurred.');
+          }
+      }
+  });
+});
+
+// Add event listener to the image to trigger file input click
+$('.upload-profile-photo img').on('click', function() {
+  $('#upload').click();
+});
+
+// Preview the selected image
+$("#upload").on("change", function () {
+  if (this.files && this.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+          $('.upload-profile-photo').css({
+              "display": "block"
+          });
+          $('.upload-profile-photo img').attr('src', e.target.result)
+      };
+
+      reader.readAsDataURL(this.files[0]);
+  }
+});
+</script>
+<script>
+    setTimeout(function() {
+        document.getElementById('success-message').style.display = 'none';
+    }, 3000);
+    setTimeout(function() {
+        document.getElementById('error-message').style.display = 'none';
+    }, 3000);
+    setTimeout(function() {
+        document.getElementById('warning-message').style.display = 'none';
+    }, 3000);
+    setTimeout(function() {
+        document.getElementById('info-message').style.display = 'none';
+    }, 3000);
+</script>
+<script>
+  $(document).ready(function() {
+    var category = window.location.search.split('=')[1];
+    if (!category || category === '') {
+      category = 'all';
+    }
+
+    $('.filter-buttons a[href="?tab=' + category + '"]').addClass('active');
+
+    $('.filter-buttons a').on('click', function() {
+      $('.filter-buttons a').removeClass('active');
+      $(this).addClass('active');
+    });
+  });
+</script>
+</html>

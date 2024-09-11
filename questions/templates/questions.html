@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+<div class="filtering-section " style="margin-bottom: 20px;direction: rtl;">
+
+    {% include "filter-bar.html" %}
+        <a href="{% url 'ask' %}{% if not user.is_authenticated %}?next=/questions/ask/{% endif %}" class="ask-btn" role="button"
+          aria-pressed="true">سوال بپرس</a>
+</div>
+<div class="questions-box " style="direction: rtl;">
+{% for question in questions_page %}
+<div class="question-card">
+    <div class="question-summary">
+        <table>
+            <tr>
+                <td>{{question.comment_count}}</td>
+                <td>نظر</td>
+            </tr>
+            <tr>
+                <td>{{question.answer_count}}</td>
+                <td>پاسخ</td>
+            </tr>
+            <tr>
+                <td>{{question.views}}</td>
+                <td>بازدید</td>
+            </tr>
+        </table>
+    </div>
+    <div class="question-content" style="width: 90%;direction: rtl;">
+        <h6><a href="{% url 'question-detail' slug=question.slug %}">{{question.title}}</a></h6>
+        <div class="tags">
+            {% for tag in question.get_tags%}
+            <a href="{% url 'tag-questions' tag %}">{{tag}}</a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endfor %}
+</div>
+<div class="modal fade" id="questionModal" tabindex="-1" aria-labelledby="questionModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="questionModalLabel">ایجاد سوال</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="questionForm" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="title">عنوان</label>
+            <input type="text" name="title" class="form-control" id="title" placeholder="عنوان را وارد کنید" required >
+            {% csrf_token %}
+            <div id="titleError" class="text-danger"></div>
+          </div>
+          <div class="form-group" id="descriptionSection" style="display: none;">
+            <label for="description">توضیحات</label>
+            <div id="description">
+              {{form.media}}
+              {{form.description}}
+            </div>
+          </div>
+          <div class="form-group" id="tagSection" style="display: none;">
+            <div id="tagCheckboxes" class="row" style="padding: 10px;">
+              <input required name='tag' class='tagify--custom-dropdown' placeholder='موضوع خود را انتخاب کنید'>
+            </div> 
+          </div>
+          <button type="button" id="nextBtn" class="btn btn-primary mt-2">بعدی</button>
+          <button type="button" id="submitBtn" class="btn btn-primary" style="display: none;" onclick="submitForm()">ایجاد سوال</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+ <ul class="pagination justify-content-center" style="position: sticky;">
+    {% if questions_page.has_previous %}
+    <li class="page-item">
+        <a class="page-link" style="color:#4DA3FF" href="?page={{ questions_page.previous_page_number }}">Prev</a>
+    </li>
+    {% endif %}
+
+    {% for i in questions_page.paginator.page_range %}
+    <li class="page-item {% if i == questions_page.number %}active{% endif %}">
+        <a class="page-link" style="color:#4DA3FF" href="?page={{ i }}">{{ i }}</a>
+    </li>
+    {% endfor %}
+
+    {% if questions_page.has_next %}
+    <li class="page-item">
+        <a class="page-link" style="color:#4DA3FF" href="?page={{ questions_page.next_page_number }}">Next</a>
+    </li>
+    {% endif %}
+</ul> 
+</div>
+
+
+{% endblock content %}

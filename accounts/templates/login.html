@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="website icon" type="png" href="https://img.icons8.com/ios-glyphs/30/login-rounded-right--v1.png">
+
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            outline: none;
+            border: none;
+            transition: all .2s ease-out;
+        }
+
+        input {
+            transition: none;
+        }
+
+        a {
+            text-decoration: none !important;
+        }
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px !important;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #4DA3FF;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        body {
+            min-width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        .sign-in {
+            width: 400px;
+            padding: 20px 0 20px 0;
+            border: 1px solid #e6e6e6;
+            border-radius: 7px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .sign-in input {
+            margin-bottom: 14px;
+            padding: 10px;
+            width: 90%;
+            border-radius: 5px;
+            border: 1px #e6e6e6 solid;
+            font-size: 14px !important;
+        }
+
+
+        .sign-in input:focus {
+            border: 2px #009688 solid;
+            padding: 9px;
+        }
+
+        .sign-in button {
+            padding: 9px;
+            background-color: #009688;
+            border-radius: 6px;
+            color: white;
+            width: 90%;
+            margin-top: 8px;
+            margin-bottom: 14px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .sign-in button:hover {
+            filter: brightness(90%);
+        }
+
+
+        .header-p {
+            color: #009688;
+            margin-bottom: 20px !important;
+            text-align: center !important;
+            font-size: 25px !important;
+        }
+
+        .redirect-btn {
+            display: inline-block;
+            padding: 2px;
+            cursor: pointer;
+            font-size: small;
+            margin-bottom: 0;
+        }
+
+        .redirect-btn a {
+            text-decoration: none;
+            color: #707070;
+            display: block;
+        }
+
+        .redirect-btn a:hover,
+        .forgot-pass a:hover {
+            color: #009688;
+        }
+
+        .forgot-pass {
+            padding-left: 5%;
+            text-align: left;
+            font-size: small;
+            margin-bottom: 5px;
+            width: 100%;
+        }
+
+        .forgot-pass a {
+            color: #707070;
+            text-decoration: none;
+        }
+
+        .sign-in .back {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: unset;
+            padding: 0 5%;
+        }
+
+        .sign-in .back svg {
+            color: #707070;
+        }
+
+        .sign-in .back a svg:hover {
+            color: #009688;
+            cursor: pointer;
+        }
+
+        .show-errors {
+            width: 350px;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        .show-errors div {
+            margin: 0%;
+            margin-top: 15px;
+        }
+
+        @media(max-width:412px) {
+
+            .sign-in {
+                width: 100%;
+            }
+
+            .show-errors {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+        <div class="sign-in">
+            <div class="back">
+                <a href="/"><svg xmlns="http://www.w3.org/2000/svg" width="33" height="33" viewBox="0 0 24 24">
+                        <path fill="currentColor"
+                            d="m6.8 13l2.9 2.9q.275.275.275.7t-.275.7q-.275.275-.7.275t-.7-.275l-4.6-4.6q-.15-.15-.213-.325T3.426 12q0-.2.063-.375T3.7 11.3l4.6-4.6q.275-.275.7-.275t.7.275q.275.275.275.7t-.275.7L6.8 11H20q.425 0 .713.288T21 12q0 .425-.288.713T20 13H6.8Z" />
+                    </svg></a>
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24">
+                    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4m-5-4l5-5l-5-5m5 5H3" />
+                </svg>
+            </div>
+            <p class="header-p">ورود به سایت</p>
+            <input type="text" placeholder="نام کاربری" name="username">
+            <input type="password" placeholder="رمز عبور" name="password">
+            <button class="sign-in-btn">ورود به پنل کاربری</button>
+            <p class="redirect-btn"><a href="{% url 'register' %}">ثبت نام در سایت</a></p>
+            <div class="show-errors">
+            </div>
+        </div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(".sign-in-btn").on("click", function () {
+        var username = $("[name='username']").val();
+        var password = $("[name='password']").val();
+        const queryParams = new URLSearchParams(window.location.search);
+
+        const nextUrl = queryParams.get('next') || '/';
+
+
+        $.ajax({
+            type: "POST",
+            url: "{% url 'login' %}?next=" + encodeURIComponent(nextUrl),
+            data: {
+                'username': username,
+                'password': password,
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                action: 'post'
+            },
+            success: function (data) {
+
+                var next_url = data['next_url'];
+                window.location.href = next_url;
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                $('.sign-in .show-errors').html(`<div class="alert-danger alert">
+                 نام کاربر یا رمز عبور اشتباه است </div>`)
+            }
+        })
+
+    })
+</script>
+
+</html>

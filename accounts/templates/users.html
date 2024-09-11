@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    .user-container {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .user-picture {
+        width: 70px; 
+        height: 70px;
+        border-radius: 50%;
+        margin-right: 20px;
+    }
+
+    .user-info {
+        flex: 1;
+    }
+
+    .user-info h4 {
+        margin: 0;
+        font-size: 14px; 
+    }
+
+    .user-info p {
+        margin: 3px 0; 
+        color: #707070;
+        font-size: 12px;
+    }
+
+    .pagination .page-item.active .page-link {
+        color: white !important;
+        background-color: #4DA3FF;
+        border-color: #4DA3FF;
+    }
+    .result-msg {
+        border-bottom: 2px solid #B3E5FC;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+    }
+
+
+    .user-column {
+        flex: 0 0 25%; 
+        max-width: 22%;
+        padding: 0 15px; 
+    }
+
+    @media (max-width: 992px) {
+        .user-column {
+            flex-basis: 33.33%; 
+            max-width: 33.33%;
+        }
+        
+    }
+
+    @media (max-width: 768px) {
+        .user-column {
+            flex-basis: 50%;
+            max-width: 50%;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .user-column {
+            flex-basis: 100%; 
+            max-width: 100%;
+        }
+    }
+</style>
+
+<div class="show-cases cases container row" style="padding: 0; margin-top: 20px;">
+    <div class="result-msg">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M16 17v2H2v-2s0-4 7-4s7 4 7 4m-3.5-9.5A3.5 3.5 0 1 0 9 11a3.5 3.5 0 0 0 3.5-3.5m3.44 5.5A5.32 5.32 0 0 1 18 17v2h4v-2s0-3.63-6.06-4M15 4a3.39 3.39 0 0 0-1.93.59a5 5 0 0 1 0 5.82A3.39 3.39 0 0 0 15 11a3.5 3.5 0 0 0 0-7" />
+        </svg>
+    </div>
+    <div class="users-list row">
+        {% for user in object_list %}
+        {% if not user.is_superuser and user.is_active %}
+        <div class="user-column">
+            <div class="user-container">
+                <img class="user-picture" src="{{ user.profile_img.url }}">
+                <div class="user-info">
+                    <a href="{% url 'profile' user.username %}"><h4>{{ user.username }}</h4></a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+</div>
+<ul class="pagination justify-content-center" style="margin-top: 20px;">
+    {% if page_obj.has_previous %}
+    <li class="page-item">
+        <a class="page-link" style="color:#4DA3FF" href="?page={{ page_obj.previous_page_number }}">Prev</a>
+    </li>
+    {% endif %}
+
+    {% for i in page_obj.paginator.page_range %}
+    <li class="page-item {% if i == page_obj.number %}active{% endif %}">
+        <a class="page-link" style="color:#4DA3FF" href="?page={{ i }}">{{ i }}</a>
+    </li>
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+    <li class="page-item">
+        <a class="page-link" style="color:#4DA3FF" href="?page={{ page_obj.next_page_number }}">Next</a>
+    </li>
+    {% endif %}
+</ul>
+
+
+{% endblock %}

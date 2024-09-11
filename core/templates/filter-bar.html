@@ -1,0 +1,29 @@
+
+<div class="filter-container" style="direction: rtl;">
+    <div class="filter-buttons btn-group" role="group" aria-label="Filter by">
+
+        <a type="button" class="btn btn-light" href="?tab=all">همه</a>
+        <a type="button" class="btn btn-light" href="?tab=unaswered">بدون پاسخ</a>
+        <a type="button" class="btn btn-light" href="?tab=newest">جدیدترین</a>
+        <a type="button" class="btn btn-light" href="?tab=week">هفته</a>
+        <a type="button" class="btn btn-light" href="?tab=month">ماه</a>
+    </div>
+    <p style="text-align: right; margin: 0 20px;direction: rtl;" class="text-muted">{{ questions.count }} سوال</p>
+</div>
+
+<script>
+    $(document).ready(function() {
+      var category = window.location.search.split('=')[1];
+      if (!category || category === '') {
+        category = 'all';
+      }
+  
+      $('.filter-buttons a[href="?tab=' + category + '"]').addClass('active');
+  
+      $('.filter-buttons a').on('click', function() {
+        $('.filter-buttons a').removeClass('active');
+        $(this).addClass('active');
+      });
+    });
+  </script>
+  
