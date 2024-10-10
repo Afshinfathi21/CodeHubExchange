@@ -220,7 +220,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Set session timeout to 15 minutes (900 seconds)
 SESSION_COOKIE_AGE = 900
-SESSION_COOKIE_SECURE = True
+# SESSION_COOKIE_SECURE = True
 # APPEND_SLASH = True
 # CSRF_COOKIE_SECURE = True
 # SECURE_SSL_REDIRECT = True
